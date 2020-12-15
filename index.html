@@ -5,6 +5,7 @@
   <title>Slots - DEMO</title>
 </head>
 <body>
+  <div id="gameRoot"></div>
 
   <!-- Game screen -->
   <template>
@@ -16,11 +17,30 @@
     <section id="loginScreen" class="login-screen"></section>
   </template>
 
+  <!-- Extensions -->
+  <script>
+    /** 
+     * bling.js by Paul Irish 
+     * view github gist -> https://gist.github.com/paulirish/12fb951a8b893a454b32#file-bling-js 
+    */
+    window._$ = document.querySelectorAll.bind(document);
+
+    Node.prototype._on = window.on = function (name, fn) {
+      this.addEventListener(name, fn);
+    }
+
+    NodeList.prototype.__proto__ = Array.prototype;
+
+    NodeList.prototype._on = NodeList.prototype.addEventListener = function (name, fn) {
+      this.forEach(function (elem, i) {
+        elem.on(name, fn);
+      });
+    }
+  </script>
   <script>
     window.BASE_URL = 'https://game-server.kovalevskyi.net';
   </script>
 
-  <script src="./src/extensions.js"></script>
   <script type="module" src="./src/services.js"></script>
   <script type="module" src="./src/main.js"></script>
   <script type="module" src="./src/index.js"></script>
