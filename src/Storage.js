@@ -11,9 +11,10 @@ export class Storage {
     });
   }
 
-  send(data) {
+  async send(data) {
     return new Promise((resolve, reject) => {
-      localStorage.setItem(this.storageName, JSON.stringify(data));
+      const oldData = localStorage.getItem(this.storageName);
+      localStorage.setItem(this.storageName, JSON.stringify({ ...oldData, ...data }));
       resolve();
     });
   }
