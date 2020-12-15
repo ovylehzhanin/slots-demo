@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slots - DEMO</title>
+</head>
+<body>
+
+  <!-- Game screen -->
+  <template>
+    <section id="gameScreen" class="game-screen"></section>
+  </template>
+
+  <!-- Login screen -->
+  <template>
+    <section id="loginScreen" class="login-screen"></section>
+  </template>
+
+  <script>
+    window.BASE_URL = 'https://game-server.kovalevskyi.net';
+  </script>
+
+  <script src="./src/extensions.js"></script>
+  <script type="module" src="./src/services.js"></script>
+  <script type="module" src="./src/main.js"></script>
+  <script type="module" src="./src/index.js"></script>
+</body>
+</html>
