@@ -1,0 +1,23 @@
+{
+  "name": "slots-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server --https=./node_modules/live-server-https"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexeyvylegzhanin/slots-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexeyvylegzhanin/slots-demo/issues"
+  },
+  "homepage": "https://github.com/alexeyvylegzhanin/slots-demo#readme",
+  "devDependencies": {
+    "live-server-https": "0.0.2"
+  }
+}
