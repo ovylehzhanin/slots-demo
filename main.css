@@ -1,12 +1,96 @@
-html {
-  font-size: 16px;
+:root {
+  --base-size: 1rem;
+  --base-gap: calc(var(--base-size) / 2);
+  --full-height: 100vh;
+  --border-radius: 8px;
+  --border-rounded: 50%;
+  --light-gray: #646464;
 }
 
-::root {
-  --base-size: 1rem;
+html, body {
+  margin: 0;
+}
+
+html {
+  font-size: 16px;
+  margin: 0;
+  padding: var(--base-gap);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   /* add pretty fonts later... */
   font-family: sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(var(--full-height) - var(--base-size));
+  border: 1px solid var(--light-gray);
+}
+
+.users-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.user {
+  width: 7rem;
+  height: 7rem;
+  padding: 0;
+  border-radius: var(--border-rounded);
+  box-shadow: 0 0 1px 0 var(--light-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user--add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 275px ease-in;
+}
+
+.user--add:hover {
+  background-color: var(--light-gray);
+}
+.user--add:active {
+  background-color: black;
+}
+
+.user--add svg {
+  fill: var(--light-gray);
+  width: 50%;
+  display: block;
+  position: relative;
+  transform: translateX(5px);
+}
+
+.user--add:hover svg {
+  fill: white;
+}
+
+.user:not(:last-child) {
+  margin-right: var(--base-gap);
+}
+
+.user-avatar {
+  display: block;
+  margin: 0;
+  user-select: none;
+}
+
+.user-avatar__image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
