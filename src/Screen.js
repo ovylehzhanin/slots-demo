@@ -1,17 +1,29 @@
-const { _$ } = window;
+const { _$, _$id } = window;
 
 export class Screen {
-  constructor($root, templateSelector) {
-    this.$root = $root;
-    this.templateSelector = templateSelector;
-    this.$dom = null;
+  constructor(rootSelector, name) {
+    this.rootSelector = rootSelector;
+    this.name = name;
+    this.templateSelector = `tmp.${this.name}`;
   }
 
-  getTemplateNode() {
-    return _$(`#tmp.${this.templateSelector}`);
+  get $dom() {
+    return _$id(`${this.templateSelector}`).content.cloneNode(true);
   }
 
-  mount() { }
+  get $root() {
+    return _$(this.rootSelector);
+  }
 
-  unmount() { }
+  mount() {
+    this.$root.appendChild(this.$dom);
+  }
+
+  unmount() {
+    const $root = this.$root;
+    /* TODO: pretify _$ usage with 2-nd arg @{scope} as optional param */
+    let domInstance = $root.querySelector(`#${this.name}`);
+
+    domInstance && $root.removeChild(domInstance);
+  }
 }
