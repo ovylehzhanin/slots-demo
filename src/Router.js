@@ -3,20 +3,21 @@ const { CONSTANTS } = window.APP_GLOBALS;
 export class Router {
   constructor(routes = {}) {
     this.history = window.history;
+    this.location = window.location;
     this.routes = routes;
   }
 
   cleanHash() {
-    this.history.replaceState(null, null, ' ');
+    this.location.hash = '';
   }
 
   pushToRoute(routeName) {
-    const { path } = this.routes[routeName];
+    const { path } = this.routes.find((route) => route.routeName === routeName);
 
     if (path === CONSTANTS.EMPTY_ROUTE) {
       this.cleanHash();
     } else {
-      this.history.pushState(null, null, path);
+      this.location.hash = `${path}`;
     }
   }
 }
