@@ -9,14 +9,23 @@
 
   <div id="gameRoot"></div>
 
+  <div>
+    <a href="#test1">Test 1</a>
+    <a href="#test2">Test 2</a>
+    <br/>
+    <button id="toHome" data-route="HOME"> --> Home</button><br/>
+    <br/>
+    <button id="toLogin" data-route="LOGIN"> --> Login</button>
+  </div>
+
   <!-- Game screen -->
-  <template>
-    <section id="gameScreen" class="game-screen"></section>
+  <template id="tmp.GameScreen">
+    <section id="GameScreen" class="game-screen">This is future game screen!</section>
   </template>
 
   <!-- Login screen -->
   <template id="tmp.LoginScreen">
-    <section class="container">
+    <section id="LoginScreen" class="container">
       <h2>Login</h2>
       <ul class="users-list">
         <li class="user">
@@ -43,24 +52,44 @@
      * bling.js by Paul Irish 
      * view github gist -> https://gist.github.com/paulirish/12fb951a8b893a454b32#file-bling-js 
     */
-    window._$ = document.querySelectorAll.bind(document);
+    window._$ = document.querySelector.bind(document);
+    window._$$ = document.querySelectorAll.bind(document);
+    window._$id = document.getElementById.bind(document);
 
-    Node.prototype._on = window.on = function (name, fn) {
-      this.addEventListener(name, fn);
+    Node.prototype._on = window._on = function (name, fn, useCapture = false) {
+      this.addEventListener(name, fn, useCapture);
     }
 
     NodeList.prototype.__proto__ = Array.prototype;
 
-    NodeList.prototype._on = NodeList.prototype.addEventListener = function (name, fn) {
+    Array.prototype._on = NodeList.prototype._on = NodeList.prototype.addEventListener = function (name, fn) {
       this.forEach(function (elem, i) {
-        elem.on(name, fn);
+        elem._on(name, fn);
       });
     }
   </script>
   <script>
-    window.BASE_URL = 'https://game-server.kovalevskyi.net';
+    window.APP_GLOBALS = {
+      BASE_URL: 'https://game-server.kovalevskyi.net',
+      ROUTES: [
+        {
+          routeName: 'HOME', 
+          path: '',
+          screenName: 'GameScreen'
+        },
+        {
+          routeName: 'LOGIN',
+          path: '#login',
+          screenName: 'LoginScreen'
+        },
+      ],
+      CONSTANTS: {
+        'EMPTY_ROUTE': '',
+      }
+    };
   </script>
 
+  <script type="module" src="./src/Router.js"></script>
   <script type="module" src="./src/Screen.js"></script>
   <script type="module" src="./src/LoginScreen.js"></script>
   <script type="module" src="./src/GameScreen.js"></script>

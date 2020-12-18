@@ -2,7 +2,7 @@ import { Storage } from './Storage.js';
 import { USERS_STORAGE_KEY } from './constants.js';
 import { getUserInfo } from './services.js';
 
-export class Users {
+export class UsersModel {
   constructor() {
     this.storage = new Storage(USERS_STORAGE_KEY);
   }

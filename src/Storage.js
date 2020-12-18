@@ -1,7 +1,7 @@
 const { localStorage, JSON } = window;
 
 export class Storage {
-  constructor(storageName) {
+  constructor(storageName, initialData) {
     this.storageName = storageName;
   }
 
