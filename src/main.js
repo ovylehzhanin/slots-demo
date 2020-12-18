@@ -1,7 +1,7 @@
 import { getUserInfo, makeSpin } from './services.js';
 
 export function main() {
-  const $loginButton = $('#loginButton');
+  /* const $loginButton = $('#loginButton');
 
   $loginButton.on('click', async () => {
     console.log('fetch started');
@@ -14,5 +14,5 @@ export function main() {
 
   $makeSpinButton.addEventListener('click', async () => {
     console.log(await makeSpin('2000', '20'));
-  }, false);
+  }, false); */
 };

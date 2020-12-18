@@ -7,7 +7,15 @@
 </head>
 <body>
 
-  <div id="gameRoot">
+  <div id="gameRoot"></div>
+
+  <!-- Game screen -->
+  <template>
+    <section id="gameScreen" class="game-screen"></section>
+  </template>
+
+  <!-- Login screen -->
+  <template id="tmp.LoginScreen">
     <section class="container">
       <h2>Login</h2>
       <ul class="users-list">
@@ -27,16 +35,6 @@
         </li>
       </ul> 
     </section>
-  </div>
-
-  <!-- Game screen -->
-  <template>
-    <section id="gameScreen" class="game-screen"></section>
-  </template>
-
-  <!-- Login screen -->
-  <template>
-    <section id="loginScreen" class="login-screen"></section>
   </template>
 
   <!-- Extensions -->
@@ -63,6 +61,9 @@
     window.BASE_URL = 'https://game-server.kovalevskyi.net';
   </script>
 
+  <script type="module" src="./src/Screen.js"></script>
+  <script type="module" src="./src/LoginScreen.js"></script>
+  <script type="module" src="./src/GameScreen.js"></script>
   <script type="module" src="./src/services.js"></script>
   <script type="module" src="./src/main.js"></script>
   <script type="module" src="./src/index.js"></script>
