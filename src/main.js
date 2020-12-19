@@ -1,41 +1,55 @@
 import { Router } from './Router.js';
+import { View } from './View.js';
 import { GameScreen } from './GameScreen.js';
 import { LoginScreen } from './LoginScreen.js';
 import { UsersModel } from './Users.model.js';
-const { _$, APP_GLOBALS: { ROUTES }, location } = window;
+/* 
+  for dev needs
+*/
+import { TestScreen } from './TestScreen.js';
+/* 
+  end
+ */
+import { GameSessionModel } from './GameSession.model.js';
+const { APP_GLOBALS: { ROUTES } } = window;
 
-export async function main() {
-  const userLoggined = false;
-  const router = new Router(ROUTES);
-  const $rootEl = _$('#gameRoot');
-  const screens = [
-    new LoginScreen('#gameRoot', 'LoginScreen'),
-    new GameScreen('#gameRoot', 'GameScreen')
-  ];
+const view = new View([
+  new LoginScreen('#gameRoot', 'LoginScreen'),
+  new GameScreen('#gameRoot', 'GameScreen'),
+  new TestScreen('#gameRoot', 'TestScreen')
+], '#gameRoot');
 
-  const usersModel = new UsersModel();
+const router = new Router(ROUTES);
+const usersModel = new UsersModel();
+const gameSessionModel = new GameSessionModel();
 
-  await usersModel.addUser({ name: 'Nick', id: 2002 });
-  const res = await usersModel.getUsersList();
-  console.log(res);
+const handleRoute = (_) => {
+  view.unmountScreens();
+  view.setView(router.getRequestedScreenName());
+};
 
-  // if (!userLoggined) {}
-  const routeControls = [_$('#toHome'), _$('#toLogin')];
-
-  routeControls._on('click', (event) => {
-    router.pushToRoute(event.target.dataset.route);
-  })
-
-  const handleRoute = (event) => {
-    screens.forEach(screen => screen.unmount());
-
-    let requestedRoute = ROUTES.find(({ path }) => path === location.hash);
-
-    screens
-      .find(screen => screen.name === requestedRoute.screenName)
-      .mount();
-  };
-
+export function initialize() {
+  view.showLoader();
   window._on('hashchange', handleRoute);
   window._on('load', handleRoute);
+}
+
+export async function main() {
+  // gameSessionModel.write();
+  let usersList = await usersModel.getUsersList();
+  let gameSession = gameSessionModel.getLastSession();
+
+  console.log('recived users', usersList);
+  console.log('received last session', gameSession);
+
+  if (gameSession) {
+    router.pushToRoute('HOME');
+  } else {
+    if (!usersList?.length) {
+      let mockedUsers = await (await fetch('assets/mock/users.json')).json();
+      usersModel.applyMock(mockedUsers);
+    }
+
+    router.pushToRoute('LOGIN');
+  }
 };
