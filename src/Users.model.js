@@ -1,18 +1,23 @@
 import { Storage } from './Storage.js';
-import { USERS_STORAGE_KEY } from './constants.js';
 import { getUserInfo } from './services.js';
+const { CONSTANTS } = window.APP_GLOBALS;
 
 export class UsersModel {
   constructor() {
-    this.storage = new Storage(USERS_STORAGE_KEY);
+    this.usersStorage = new Storage(CONSTANTS.USERS_STORAGE_KEY);
+  }
+
+  applyMock(mockedData) {
+    this.usersStorage.applyMock(mockedData);
   }
 
   async getUsersList() {
-    return await this.storage.load();
+    let res = await this.usersStorage.load();
+    return res;
   }
 
   async addUser(userData) {
-    await this.storage.send(userData);
+    await this.usersStorage.send(userData);
   }
 
   async getUserDetails(userId) {
