@@ -26,13 +26,35 @@ body {
   font-family: sans-serif;
 }
 
+.main {
+  position: relative;
+  height: calc(var(--full-height) - var(--base-size));
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loader__image {
+  opacity: .4;
+}
+
 .container {
   display: flex;
+  height: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(var(--full-height) - var(--base-size));
   border: 1px solid var(--light-gray);
+}
+
+.test-image {
+  display: block;
+  width: 70%;
+  height: auto;
 }
 
 .users-list {
