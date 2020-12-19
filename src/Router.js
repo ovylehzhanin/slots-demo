@@ -1,7 +1,7 @@
 const { CONSTANTS } = window.APP_GLOBALS;
 
 export class Router {
-  constructor(routes = {}) {
+  constructor(routes = []) {
     this.history = window.history;
     this.location = window.location;
     this.routes = routes;
@@ -20,4 +20,14 @@ export class Router {
       this.location.hash = `${path}`;
     }
   }
+
+  findRequestedRoute(locationHash) {
+    return this.routes.find(({ path }) => path === locationHash);
+  }
+
+  getRequestedScreenName() {
+    let { screenName } = this.findRequestedRoute(this.location.hash);
+    return screenName;
+  }
+
 }
