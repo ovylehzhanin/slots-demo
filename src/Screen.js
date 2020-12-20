@@ -8,6 +8,10 @@ export class Screen {
   }
 
   get $dom() {
+    return this.$root.querySelector(`#${this.name}`);
+  }
+
+  get $template() {
     return _$id(`${this.templateSelector}`).content.cloneNode(true);
   }
 
@@ -16,7 +20,7 @@ export class Screen {
   }
 
   mount() {
-    this.$root.appendChild(this.$dom);
+    this.$root.appendChild(this.$template);
   }
 
   unmount() {
