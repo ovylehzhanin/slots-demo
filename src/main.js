@@ -3,13 +3,11 @@ import { View } from './View.js';
 import { GameScreen } from './GameScreen.js';
 import { LoginScreen } from './LoginScreen.js';
 import { UsersModel } from './Users.model.js';
-/* 
-  for dev needs
-*/
+
+/* for dev needs */
 import { TestScreen } from './TestScreen.js';
-/* 
-  end
- */
+/* end */
+
 import { GameSessionModel } from './GameSession.model.js';
 const { APP_GLOBALS: { ROUTES } } = window;
 
@@ -39,17 +37,15 @@ export async function main() {
   let usersList = await usersModel.getUsersList();
   let gameSession = gameSessionModel.getLastSession();
 
-  console.log('recived users', usersList);
-  console.log('received last session', gameSession);
-
   if (gameSession) {
     router.pushToRoute('HOME');
   } else {
     if (!usersList?.length) {
       let mockedUsers = await (await fetch('assets/mock/users.json')).json();
       usersModel.applyMock(mockedUsers);
+      usersList = await usersModel.getUsersList();
     }
-
     router.pushToRoute('LOGIN');
+    view.runRender('LoginScreen/renderUsers', usersList);
   }
 };

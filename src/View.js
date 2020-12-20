@@ -22,6 +22,15 @@ export class View {
     return this.$root.innerHTML;
   }
 
+  runRender(path, payload) {
+    const [screenName, renderFn] = path.split('/');
+
+    let r = this.screens
+      .find(screen => screen.name === screenName);
+
+    r[renderFn](payload);
+  }
+
   setView(screenName) {
     this.unmountScreens();
 

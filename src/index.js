@@ -1,3 +1,4 @@
-import { main } from './main.js';
+import { initialize, main } from './main.js';
 
+initialize();
 main();
