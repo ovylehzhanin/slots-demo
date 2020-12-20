@@ -36,6 +36,7 @@ export async function main() {
   // gameSessionModel.write();
   let usersList = await usersModel.getUsersList();
   let gameSession = gameSessionModel.getLastSession();
+  /* TODO: use constants(!) */
 
   if (gameSession) {
     router.pushToRoute('HOME');
@@ -47,5 +48,10 @@ export async function main() {
     }
     router.pushToRoute('LOGIN');
     view.runRender('LoginScreen/renderUsers', usersList);
+
+    view.$root._on('request-login', ({ detail })=> {
+      gameSessionModel.write(detail.userId);
+      router.pushToRoute('HOME');
+    });
   }
 };

@@ -84,8 +84,21 @@ export class LoginScreen extends Screen {
       }
     });
 
-    this.$usersList._on('click', event => {
-      console.log(event.target);
+    this.$usersList._on('click', ({ target })=> {
+      if (
+        /* TODO: move to constants */
+        target.tagName === 'BUTTON' &&
+        target.classList.value === 'user-login'
+      ) {
+        const { id: userId } = target.parentNode.dataset;
+        const _event = new CustomEvent('request-login', {
+          detail: {
+            userId
+          }
+        });
+        
+        this.$root.dispatchEvent(_event);
+      }
     });
   }
   mount() {
