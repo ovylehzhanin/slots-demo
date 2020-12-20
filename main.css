@@ -38,10 +38,17 @@ body {
 }
 
 .loader {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  top: var(--base-gap);
+  left: var(--base-gap);
+  right: var(--base-gap);
+  bottom: var(--base-gap);
+  background-color: white;
+  opacity: .8;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loader__image {
@@ -56,6 +63,7 @@ body {
   align-items: center;
 }
 
+/* TODO: remove when unnecessary */
 .test-image {
   display: block;
   width: 70%;
@@ -88,7 +96,7 @@ body {
   left: -.5rem;
   right: -.5rem;
   bottom: -3rem;
-  box-shadow: 0 0 1px 0 var(--light-gray);
+  box-shadow: 0 1px 1px 0 var(--light-gray);
   border-radius: 3px;
   background-color: var(--lightest-gray);
   z-index: 0;
@@ -102,8 +110,9 @@ body {
   left: 50%;
   transform: translateX(-50%);
   border: none;
-  box-shadow: 0 0 1px 0 var(--light-gray);
+  box-shadow: 0 1px 1px 0 var(--light-gray);
   background-color: white;
+  border-radius: 5px;
 }
 
 .user:hover .user-login {
@@ -154,4 +163,113 @@ body {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.slots {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+}
+
+.slots__inner {
+  display: flex;
+  height: 60%;
+  width: 50%;
+}
+
+.slots__wheel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 33.3%;
+}
+
+.slots__wheel:not(:last-child)::before {
+  position: absolute;
+  display: block;
+  content: '';
+  right: -1px;
+  height: 65%;
+  width: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--lightest-gray);
+}
+
+.slots__wheel-cell {
+  position: relative;
+  height: 33.3%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slots__wheel-cell::before {
+  content: '';
+  display: block;
+  font-size: 8rem;
+  text-align: center;
+}
+
+.slots__wheel-cell::after {
+  position: absolute;
+  display: block;
+  content: '';
+  height: 2px;
+  width: 30%;
+  bottom: -1px;
+  background-color: var(--lightest-gray);
+}
+
+.slots__wheel-cell[data-value="1"]::before {
+  content: '🎄';
+}
+
+.slots__wheel-cell[data-value="2"]::before {
+  content: '🎁';
+}
+
+.slots__wheel-cell[data-value="3"]::before {
+  content: '🎅';
+}
+
+.slots__wheel-cell[data-value="4"]::before {
+  content: '✨';
+}
+
+.slots__wheel-cell[data-value="5"]::before {
+  content: '⭐';
+}
+
+.slots__wheel-cell[data-value="6"]::before {
+  content: '🏦';
+}
+
+.slots__wheel-cell[data-value="7"]::before {
+  content: '😉';
+}
+
+.slots__wheel-cell[data-value="8"]::before {
+  content: '🕹️';
+}
+
+.slots__wheel-cell[data-value="9"]::before {
+  content: '🎉';
+}
+
+.user-bar {
+  height: 2rem;
+  position: fixed;
+  bottom: var(--base-gap);
+  left: var(--base-gap);
+  right: var(--base-gap);
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 0 1px 0 red;
+  background-color: var(--lightest-gray);
 }
