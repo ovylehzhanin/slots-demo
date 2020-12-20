@@ -10,7 +10,11 @@ export class GameSessionModel {
     return this.gameSessionStorage.loadSync();
   }
 
-  write() {
-    this.gameSessionStorage.setSync('hello');
+  write(userId) {
+    this.gameSessionStorage.setSync(userId);
+  }
+
+  deleteSession() {
+    this.gameSessionStorage.clear();
   }
 }
