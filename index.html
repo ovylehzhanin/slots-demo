@@ -6,33 +6,28 @@
   <link rel="stylesheet" href="./main.css">
 </head>
 <body>
+  <div id="gameRoot" class="main"></div>
 
-  <div id="gameRoot"></div>
-
-  <div>
-    <a href="#test1">Test 1</a>
-    <a href="#test2">Test 2</a>
-    <br/>
-    <button id="toHome" data-route="HOME"> --> Home</button><br/>
-    <br/>
-    <button id="toLogin" data-route="LOGIN"> --> Login</button>
-  </div>
-
+  <!-- Main Loader -->
+  <template id="tmp.MainLoader">
+    <div class="loader">
+      <img class="loader__image" src="assets/loader.gif" alt="image">
+    </div>
+  </template>
   <!-- Game screen -->
   <template id="tmp.GameScreen">
-    <section id="GameScreen" class="game-screen">This is future game screen!</section>
+    <section id="GameScreen" class="container">
+      <div class=""></div>
+      <img class="test-image" src="assets/img/game-screen.jpg" alt="Game Screen">
+    </section>
   </template>
-
   <!-- Login screen -->
   <template id="tmp.LoginScreen">
     <section id="LoginScreen" class="container">
       <h2>Login</h2>
+      <!-- This should be dynamic -->
       <ul class="users-list">
-        <li class="user">
-          <figure class="user-avatar">
-            <img class="user-avatar__image" src="assets/img/andrew.png" alt="Andriy" />
-          </figure>
-        <li class="user user--add" role="button" title="Add user">
+        <li class="user user--add" id="addUser" role="button" title="Add user">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612">
             <path
               d="M269.272 310.198c86.177-.005 117.184-86.291 125.301-157.169C404.572 65.715 363.282 0 269.272 0 175.274 0 133.963 65.71 143.97 153.029c8.125 70.878 39.123 157.175 125.302 157.169z" />
@@ -44,6 +39,19 @@
         </li>
       </ul> 
     </section>
+  </template>
+  <template id="tmp.TestScreen">
+    <section id="TestScreen" class="container">
+      <h2>Test</h2>
+    </section>
+  </template>
+  <template id="tmp.UserTemplate">
+    <li class="user" data-id="{{id}}">
+      <figure class="user-avatar">
+        <img class="user-avatar__image" src="{{avatar}}" alt="{{name}}" />
+      </figure>
+      <button class="user-login">➡️  Login</button>
+    </li>
   </template>
 
   <!-- Extensions -->
@@ -62,7 +70,7 @@
 
     NodeList.prototype.__proto__ = Array.prototype;
 
-    Array.prototype._on = NodeList.prototype._on = NodeList.prototype.addEventListener = function (name, fn) {
+    NodeList.prototype._on = NodeList.prototype.addEventListener = function (name, fn) {
       this.forEach(function (elem, i) {
         elem._on(name, fn);
       });
@@ -82,18 +90,21 @@
           path: '#login',
           screenName: 'LoginScreen'
         },
+        {
+          routeName: 'TEST',
+          path: '#test',
+          screenName: 'TestScreen'
+        }
       ],
       CONSTANTS: {
+        'EMPTY_STRING': '',
         'EMPTY_ROUTE': '',
+        'USERS_STORAGE_KEY': 'users',
+        'GAME_SESSION_KEY': 'gameSession'
       }
     };
   </script>
 
-  <script type="module" src="./src/Router.js"></script>
-  <script type="module" src="./src/Screen.js"></script>
-  <script type="module" src="./src/LoginScreen.js"></script>
-  <script type="module" src="./src/GameScreen.js"></script>
-  <script type="module" src="./src/services.js"></script>
   <script type="module" src="./src/main.js"></script>
   <script type="module" src="./src/index.js"></script>
 </body>
