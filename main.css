@@ -5,6 +5,7 @@
   --border-radius: 8px;
   --border-rounded: 50%;
   --light-gray: #646464;
+  --lightest-gray: #eeecec;
 }
 
 html, body {
@@ -29,6 +30,11 @@ body {
 .main {
   position: relative;
   height: calc(var(--full-height) - var(--base-size));
+  background: linear-gradient(
+    to top,
+    var(--lightest-gray),
+    white
+  );
 }
 
 .loader {
@@ -48,7 +54,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--light-gray);
 }
 
 .test-image {
@@ -65,14 +70,44 @@ body {
 }
 
 .user {
+  position: relative;
   width: 7rem;
   height: 7rem;
-  padding: 0;
+  padding: .5rem;
   border-radius: var(--border-rounded);
-  box-shadow: 0 0 1px 0 var(--light-gray);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.user:not(.user--add):hover::before {
+  display: block;
+  content: '';
+  position: absolute;
+  top: -.5rem;
+  left: -.5rem;
+  right: -.5rem;
+  bottom: -3rem;
+  box-shadow: 0 0 1px 0 var(--light-gray);
+  border-radius: 3px;
+  background-color: var(--lightest-gray);
+  z-index: 0;
+}
+
+.user-login {
+  display: none;
+  position: absolute;
+  padding: .25rem .8rem;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border: none;
+  box-shadow: 0 0 1px 0 var(--light-gray);
+  background-color: white;
+}
+
+.user:hover .user-login {
+  display: block;
 }
 
 .user--add {
@@ -102,13 +137,17 @@ body {
 }
 
 .user:not(:last-child) {
-  margin-right: var(--base-gap);
+  margin-right: var(--base-size);
 }
 
 .user-avatar {
   display: block;
   margin: 0;
   user-select: none;
+  border-radius: var(--border-rounded);
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
 }
 
 .user-avatar__image {
