@@ -17,6 +17,9 @@
   <!-- Game screen -->
   <template id="tmp.GameScreen">
     <section id="GameScreen" class="container">
+      <div class="user-bar user-bar--top">
+        <button id="logoutButton" class="logout-button">LOGOUT 🚪⬅️</button>
+      </div>
       <div class="slots">
         <div class="slots__inner">
           <div class="slots__wheel">
@@ -44,9 +47,14 @@
             <button class="bet-selector__control" value="decrease">➖</button>
           </div>
           <input id="betInput" class="bet-selector__input" type="text" readonly value="10">
+          <label class="bet-selector__label">
+            <span class="bet-selector__label-text">
+              BAL:
+            </span>
+            <input id="balanceInput" class="bet-selector__input" type="text" readonly value="0">
+          </label>
         </div>
         <button id="spinButton" class="bet-selector__control bet-selector__control--spin">Spin</button>
-        <button class="bet-selector__control bet-selector__control--logout">Logout</button>
       </div>
       <!-- <img class="test-image" src="assets/img/game-screen.jpg" alt="Game Screen"> -->
     </section>
