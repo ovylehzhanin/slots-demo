@@ -101,9 +101,14 @@ export class LoginScreen extends Screen {
       }
     });
   }
+
+  initDetailsFetch() {
+    this.$root.dispatchEvent(new CustomEvent('login-screen-ready'));
+  }
+
   mount() {
     super.mount();
     this.bindEvents();
-    this.renderUsers();
+    this.initDetailsFetch();
   }
 }
