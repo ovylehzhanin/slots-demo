@@ -48,10 +48,10 @@ export class LoginScreen extends Screen {
   }
 
   appendUser(userData) {
-    const $usersList = this.$usersList;
-    const $addUserButton = this.$addUserButton;
-
-    $usersList.insertBefore(this.getUserDom(userData), $addUserButton);
+    this.$usersList.insertBefore(
+      this.getUserDom(userData),
+      this.$addUserButton
+    );
   }
 
   bindEvents() {
@@ -66,7 +66,7 @@ export class LoginScreen extends Screen {
           nameSet = true; 
         } else if (result === CONSTANTS.EMPTY_STRING) {
           console.log('please set corrent name');
-          promptText += '\nError: field should not be empty';
+          promptText += '\n⚠️ Error: field should not be empty';
           nameSet = false;
         } else {
           result = result.trim();
