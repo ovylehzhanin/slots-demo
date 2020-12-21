@@ -31,4 +31,8 @@ export class Storage {
       resolve();
     });
   }
+
+  clear() {
+    localStorage.removeItem(this.storageName);
+  }
 }
