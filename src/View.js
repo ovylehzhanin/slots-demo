@@ -8,36 +8,31 @@ export class View {
 
   get $root() {
     return _$(this.rootSelector);
-  } 
+  }
 
-  clearRoot() {
-    this.$root.innerHTML = '';
+  get $loaderTemplate() {
+    return _$id('tmp.MainLoader').content.cloneNode(true);
+  }
+
+  get $loader() {
+    return this.$root.querySelector('.loader');
   }
 
   unmountScreens() {
     this.screens.forEach(screen => screen.unmount());
   }
 
-  getRootContent() {
-    return this.$root.innerHTML;
-  }
-
   runRender(path, payload) {
     const [screenName, renderFn] = path.split('/');
 
-    let r = this.screens
+    let requestedScreen = this.screens
       .find(screen => screen.name === screenName);
 
-    r[renderFn](payload);
+    requestedScreen[renderFn](payload);
   }
 
   setView(screenName) {
     this.unmountScreens();
-
-    let rootContent = this.getRootContent();
-    if (rootContent) {
-      this.clearRoot();
-    }
 
     this.screens
       .find(screen => screen.name === screenName)
@@ -45,7 +40,12 @@ export class View {
   }
 
   showLoader() {
-    const $loaderDom = _$id('tmp.MainLoader').content.cloneNode(true);
-    this.$root.appendChild($loaderDom);
+    if (!this.$loader) {
+      this.$root.appendChild(this.$loaderTemplate);
+    }
+  }
+
+  hideLoader() {
+    this.$loader && this.$loader.remove();
   }
 }
