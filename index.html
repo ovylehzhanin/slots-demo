@@ -39,12 +39,14 @@
       <div class="user-bar">
         <!-- bet selector -->
         <div class="bet-selector">
-          <button>-</button>
-          <input type="text" readonly value="10">
-          <button>+</button>
+          <div class="bet-selector__controls-bar">
+            <button class="bet-selector__control" value="increase">➕</button>
+            <button class="bet-selector__control" value="decrease">➖</button>
+          </div>
+          <input id="betInput" class="bet-selector__input" type="text" readonly value="10">
         </div>
-        <button>Spin</button>
-        <button>Logout</button>
+        <button id="spinButton" class="bet-selector__control bet-selector__control--spin">Spin</button>
+        <button class="bet-selector__control bet-selector__control--logout">Logout</button>
       </div>
       <!-- <img class="test-image" src="assets/img/game-screen.jpg" alt="Game Screen"> -->
     </section>
@@ -106,6 +108,7 @@
   </script>
   <script>
     window.APP_GLOBALS = {
+      IS_DEVELOPMENT: true,
       BASE_URL: 'https://game-server.kovalevskyi.net',
       ROUTES: [
         {
