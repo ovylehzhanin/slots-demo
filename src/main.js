@@ -56,16 +56,10 @@ export function initialize() {
     view.runRender('GameScreen/updateDetails', result);
     view.hideLoader();
   });
-}
 
-export async function main() {
-  let usersList = await usersModel.getUsersList();
-  let gameSession = gameSessionModel.getLastSession();
-
-  /* TODO: use constants(!) */
-  if (gameSession) {
-    router.pushToRoute('HOME');
-  } else {
+  view.$root._on('login-screen-ready', async () => {
+    view.showLoader();
+    let usersList = await usersModel.getUsersList();
     if (!usersList?.length) {
       let mockedUsers = await (await fetch('assets/mock/users.json')).json();
       usersModel.applyMock(mockedUsers);
@@ -73,6 +67,15 @@ export async function main() {
     }
     router.pushToRoute('LOGIN');
     view.runRender('LoginScreen/renderUsers', usersList);
-    setTimeout(view.hideLoader.bind(view), 300);
-  }
-};
+    view.hideLoader();
+  });
+
+  view.$root._on('logout-pressed', async () => {
+    gameSessionModel.deleteSession();
+    router.pushToRoute('LOGIN');
+  });
+  let gameSession = gameSessionModel.getLastSession();
+
+  /* TODO: use constants(!) */
+  router.pushToRoute(gameSession ? 'HOME' : 'LOGIN');
+}
