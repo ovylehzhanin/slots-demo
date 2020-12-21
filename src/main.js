@@ -9,13 +9,17 @@ import { TestScreen } from './TestScreen.js';
 /* end */
 
 import { GameSessionModel } from './GameSession.model.js';
-const { APP_GLOBALS: { ROUTES } } = window;
+const { APP_GLOBALS: { ROUTES, IS_DEVELOPMENT } } = window;
 
 const view = new View([
   new LoginScreen('#gameRoot', 'LoginScreen'),
   new GameScreen('#gameRoot', 'GameScreen'),
   new TestScreen('#gameRoot', 'TestScreen')
 ], '#gameRoot');
+
+if (IS_DEVELOPMENT) {
+  window._view = view;
+}
 
 const router = new Router(ROUTES);
 const usersModel = new UsersModel();
@@ -30,14 +34,35 @@ export function initialize() {
   view.showLoader();
   window._on('hashchange', handleRoute);
   window._on('load', handleRoute);
+
+  view.$root._on('request-login', ({ detail }) => {
+    gameSessionModel.write(detail.userId);
+    router.pushToRoute('HOME');
+  });
+
+  view.$root._on('game-screen-ready', async () => {
+    const userId = gameSessionModel.getLastSession();
+    if (userId?.length) {
+      view.showLoader();
+      const userDetails = await usersModel.getUserDetails(userId)
+      view.runRender('GameScreen/updateDetails', userDetails);
+      view.hideLoader();
+    }
+  });
+
+  view.$root._on('spin-pressed', async ({ detail }) => {
+    view.showLoader();
+    const result = await gameSessionModel.placeBet(gameSessionModel.getLastSession(), detail.value);
+    view.runRender('GameScreen/updateDetails', result);
+    view.hideLoader();
+  });
 }
 
 export async function main() {
-  // gameSessionModel.write();
   let usersList = await usersModel.getUsersList();
   let gameSession = gameSessionModel.getLastSession();
-  /* TODO: use constants(!) */
 
+  /* TODO: use constants(!) */
   if (gameSession) {
     router.pushToRoute('HOME');
   } else {
@@ -48,10 +73,6 @@ export async function main() {
     }
     router.pushToRoute('LOGIN');
     view.runRender('LoginScreen/renderUsers', usersList);
-
-    view.$root._on('request-login', ({ detail })=> {
-      gameSessionModel.write(detail.userId);
-      router.pushToRoute('HOME');
-    });
+    setTimeout(view.hideLoader.bind(view), 300);
   }
 };
