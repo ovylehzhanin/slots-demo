@@ -75,7 +75,7 @@
               d="M457.707 375.658c-65.262 0-118.171 52.909-118.171 118.171S392.444 612 457.707 612s118.172-52.909 118.172-118.171c-.001-65.263-52.91-118.171-118.172-118.171zm51.7 138.445h-31.425v31.424c0 11.198-9.077 20.276-20.274 20.276-11.198 0-20.276-9.078-20.276-20.276v-31.424h-31.424c-11.198 0-20.276-9.077-20.276-20.276 0-11.198 9.077-20.276 20.276-20.276h31.424v-31.424c0-11.198 9.078-20.276 20.276-20.276s20.274 9.078 20.274 20.276v31.424h31.425c11.198 0 20.276 9.078 20.276 20.276-.001 11.2-9.077 20.276-20.276 20.276z" />
           </svg>
         </li>
-      </ul> 
+      </ul>
     </section>
   </template>
   <template id="tmp.TestScreen">
@@ -94,9 +94,9 @@
 
   <!-- Extensions -->
   <script>
-    /** 
-     * bling.js by Paul Irish 
-     * view github gist -> https://gist.github.com/paulirish/12fb951a8b893a454b32#file-bling-js 
+    /**
+     * bling.js by Paul Irish
+     * view github gist -> https://gist.github.com/paulirish/12fb951a8b893a454b32#file-bling-js
     */
     window._$ = document.querySelector.bind(document);
     window._$$ = document.querySelectorAll.bind(document);
@@ -120,7 +120,7 @@
       BASE_URL: 'https://game-server.kovalevskyi.net',
       ROUTES: [
         {
-          routeName: 'HOME', 
+          routeName: 'HOME',
           path: '',
           screenName: 'GameScreen'
         },
@@ -139,7 +139,10 @@
         'EMPTY_STRING': '',
         'EMPTY_ROUTE': '',
         'USERS_STORAGE_KEY': 'users',
-        'GAME_SESSION_KEY': 'gameSession'
+        'GAME_SESSION_KEY': 'gameSession',
+        'BET_AMOUNTS_KEY': 'betsAmounts',
+        'ACTION_INCREASE': 'increase',
+        'ACTION_DECREASE': 'decrease'
       }
     };
   </script>

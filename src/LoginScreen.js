@@ -63,7 +63,7 @@ export class LoginScreen extends Screen {
       while(!nameSet) {
         result = prompt(promptText, CONSTANTS.EMPTY_STRING);
         if (result == null) {
-          nameSet = true; 
+          nameSet = true;
         } else if (result === CONSTANTS.EMPTY_STRING) {
           console.log('please set corrent name');
           promptText += '\n⚠️ Error: field should not be empty';
@@ -91,13 +91,14 @@ export class LoginScreen extends Screen {
         target.classList.value === 'user-login'
       ) {
         const { id: userId } = target.parentNode.dataset;
-        const _event = new CustomEvent('request-login', {
-          detail: {
-            userId
-          }
-        });
-        
-        this.$root.dispatchEvent(_event);
+
+        this.$root.dispatchEvent(
+          new CustomEvent('request-login', {
+            detail: {
+              userId
+            }
+          })
+        );
       }
     });
   }

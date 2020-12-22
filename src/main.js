@@ -14,7 +14,7 @@ const { APP_GLOBALS: { ROUTES, IS_DEVELOPMENT } } = window;
 /* TODO:
 
   complete login case:
-    - generate uniq id for new user 
+    - generate uniq id for new user
     - ability to change profile photo + name
 
   game screen:
@@ -56,7 +56,9 @@ export function initialize() {
     if (userId?.length) {
       view.showLoader();
       const userDetails = await usersModel.getUserDetails(userId)
-      view.runRender('GameScreen/updateDetails', userDetails);
+      const bets = userDetails.bets;
+      gameSessionModel.bets = bets;
+      view.runRender('GameScreen/updateDetails', { ...userDetails, bets });
       view.hideLoader();
     }
   });
@@ -64,7 +66,7 @@ export function initialize() {
   view.$root._on('spin-pressed', async ({ detail }) => {
     view.showLoader();
     const result = await gameSessionModel.placeBet(gameSessionModel.getLastSession(), detail.value);
-    view.runRender('GameScreen/updateDetails', result);
+    view.runRender('GameScreen/updateDetails', { ...result, bets: gameSessionModel.bets });
     view.hideLoader();
   });
 
@@ -85,8 +87,16 @@ export function initialize() {
     gameSessionModel.deleteSession();
     router.pushToRoute('LOGIN');
   });
-  const gameSession = gameSessionModel.getLastSession();
 
-  /* TODO: use constants(!) */
+  view.$root._on('change-bet', ({ detail }) => {
+    let {
+      action,
+      currentBet,
+    } = detail;
+
+    view.runRender('GameScreen/updateBet', gameSessionModel.getNextBet(action, currentBet))
+  });
+
+  const gameSession = gameSessionModel.getLastSession();
   router.pushToRoute(gameSession ? 'HOME' : 'LOGIN');
 }
