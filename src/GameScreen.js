@@ -1,4 +1,5 @@
 import { Screen } from './Screen.js';
+import { formatMarkup } from './utils.js';
 const { _$ } = window;
 
 export class GameScreen extends Screen {
@@ -31,20 +32,48 @@ export class GameScreen extends Screen {
     return _$('#logoutButton');
   }
 
+  get $wheelTemplate() {
+    return _$id('tmp.WheelTemplate').content.clone(true);
+  }
+
+  get $cellTemplate() {
+    return _$id('tmp.CellTemplate');
+  }
+
+  $getWheels(rolls) {
+    const arrayIsNotEmpty = Array.isArray(rolls) && rolls.length;
+    const $cellTemplate = this.$cellTemplate;
+    let result = null;
+
+    console.log($cellTemplate);
+    console.log('empty array check', arrayIsNotEmpty);
+    if (arrayIsNotEmpty) {
+      result = rolls.map(roll => {
+        roll.map(cellValue => {
+          return formatMarkup($cellTemplate, cellValue);
+        })
+      });
+
+      console.log(result);
+    }
+
+    return null;
+  }
+
   initDetailsFetch() {
     this.$root.dispatchEvent(new CustomEvent('game-screen-ready'));
+  }
+
+  updateWheels(rolls) {
+    console.log('updateWheels -> ', rolls);
+    this.$getWheels(rolls);
   }
 
   updateDetails({ balance, last_bet, rolls, bets }) {
     this.$betInput.value = last_bet;
     this.$balanceInput.value = balance;
     this.betValues = bets.slice(0);
-  }
-
-  updateBet(value) {
-    if (value) {
-      this.$betInput.value = value;
-    }
+    this.updateWheels(rolls);
   }
 
   bindEvents() {

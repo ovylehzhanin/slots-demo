@@ -21,23 +21,7 @@
         <button id="logoutButton" class="logout-button">LOGOUT 🚪⬅️</button>
       </div>
       <div class="slots">
-        <div class="slots__inner">
-          <div class="slots__wheel">
-            <div class="slots__wheel-cell" data-value="1"></div>
-            <div class="slots__wheel-cell" data-value="2"></div>
-            <div class="slots__wheel-cell" data-value="3"></div>
-          </div>
-          <div class="slots__wheel">
-            <div class="slots__wheel-cell" data-value="4"></div>
-            <div class="slots__wheel-cell" data-value="5"></div>
-            <div class="slots__wheel-cell" data-value="6"></div>
-          </div>
-          <div class="slots__wheel">
-            <div class="slots__wheel-cell" data-value="7"></div>
-            <div class="slots__wheel-cell" data-value="8"></div>
-            <div class="slots__wheel-cell" data-value="9"></div>
-          </div>
-        </div>
+        <div class="slots__inner"></div>
       </div>
       <div class="user-bar">
         <!-- bet selector -->
@@ -84,12 +68,18 @@
     </section>
   </template>
   <template id="tmp.UserTemplate">
-    <li class="user" data-id="{{id}}">
+    <li class="user" data-id="{{userId}}">
       <figure class="user-avatar">
         <img class="user-avatar__image" src="{{avatar}}" alt="{{name}}" />
       </figure>
       <button class="user-login">➡️ Login</button>
     </li>
+  </template>
+  <template id="tmp.WheelTemplate">
+    <div class="slots__wheel"></div>
+  </template>
+  <template id="tmp.CellTemplate">
+    <div class="slots__wheel-cell" data-value="{{0}}"></div>
   </template>
 
   <!-- Extensions -->
