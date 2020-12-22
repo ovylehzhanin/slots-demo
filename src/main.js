@@ -11,6 +11,17 @@ import { TestScreen } from './TestScreen.js';
 import { GameSessionModel } from './GameSession.model.js';
 const { APP_GLOBALS: { ROUTES, IS_DEVELOPMENT } } = window;
 
+/* TODO:
+
+  complete login case:
+    - generate uniq id for new user 
+    - ability to change profile photo + name
+
+  game screen:
+    - wheels shuffle + animation
+    - bet change
+*/
+
 const view = new View([
   new LoginScreen('#gameRoot', 'LoginScreen'),
   new GameScreen('#gameRoot', 'GameScreen'),
@@ -74,7 +85,7 @@ export function initialize() {
     gameSessionModel.deleteSession();
     router.pushToRoute('LOGIN');
   });
-  let gameSession = gameSessionModel.getLastSession();
+  const gameSession = gameSessionModel.getLastSession();
 
   /* TODO: use constants(!) */
   router.pushToRoute(gameSession ? 'HOME' : 'LOGIN');
