@@ -18,8 +18,8 @@ const { APP_GLOBALS: { ROUTES, IS_DEVELOPMENT } } = window;
     - ability to change profile photo + name
 
   game screen:
-    - wheels shuffle + animation
-    - bet change
+    - wheels shuffle
+    - animation
 */
 
 const view = new View([
@@ -87,14 +87,9 @@ export function initialize() {
   });
 
   view.$root._on('change-bet', ({ detail }) => {
-    let {
-      action,
-      currentBet,
-    } = detail;
-
-    view.runRender('GameScreen/updateBet', gameSessionModel.getNextBet(action, currentBet))
+    view.runRender('GameScreen/updateBet', gameSessionModel.getNextBet(detail.action, detail.currentBet))
   });
 
-  const gameSession = gameSessionModel.getLastSession();
-  router.pushToRoute(gameSession ? 'HOME' : 'LOGIN');
+  /* TODO: move to constants */
+  router.pushToRoute(gameSessionModel.getLastSession() ? 'HOME' : 'LOGIN');
 }
