@@ -28,6 +28,13 @@ export class View {
     let requestedScreen = this.screens
       .find(screen => screen.name === screenName);
 
+    if (!requestedScreen) {
+      console.warn(`
+        View.js => View.runRender(path: <string>, payload: <object>)
+        Seems like you've requested screenName or didn't created instance for screen properly: ${screenName}
+      `)
+    }
+
     requestedScreen[renderFn](payload);
   }
 
