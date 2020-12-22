@@ -1,4 +1,5 @@
 import { Screen } from './Screen.js';
+import { formatMarkup } from './utils.js'
 const { _$, APP_GLOBALS: { CONSTANTS } } = window;
 
 export class LoginScreen extends Screen {
@@ -21,16 +22,11 @@ export class LoginScreen extends Screen {
 
   getUserDom(user) {
     const templateDOM = this.$userTemplate.firstElementChild;
-    const tempDiv = document.createElement('div');
-    const el = document.createElement('li');
-    tempDiv.appendChild(el);
-
-    el.outerHTML = templateDOM.outerHTML
-      .replace(/{{id}}/, user.userId)
-      .replace(/{{name}}/, user.name)
-      .replace(/{{avatar}}/, `assets/img/${user.avatar}`);
-
-    return tempDiv.firstElementChild;
+    return formatMarkup(templateDOM, {
+      'userId': user.userId,
+      'name': user.name,
+      'avatar': `assets/img/${user.avatar}`
+    });
   }
 
   renderUsers(usersList) {
