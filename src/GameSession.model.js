@@ -1,6 +1,6 @@
 import { makeSpin } from './services.js';
 import { Storage } from './Storage.js';
-const { CONSTANTS }= window.APP_GLOBALS;
+const { CONSTANTS } = window.APP_GLOBALS;
 
 export class GameSessionModel {
   constructor() {
