@@ -64,10 +64,8 @@ export function initialize() {
   });
 
   view.$root._on('spin-pressed', async ({ detail }) => {
-    view.showLoader();
     const result = await gameSessionModel.placeBet(gameSessionModel.getLastSession(), detail.value);
     view.runRender('GameScreen/updateDetails', { ...result, bets: gameSessionModel.bets });
-    view.hideLoader();
   });
 
   view.$root._on('login-screen-ready', async () => {
