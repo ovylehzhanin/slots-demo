@@ -4,17 +4,27 @@ export const formatMarkup = (elHTML, data) => {
   let result = elHTML.outerHTML;
   tempDiv.appendChild(el);
 
-  Object.keys(data).forEach(key => {
-    let entry = data[key];
-    if (!entry) {
-      console.warn(`
-        utils.js -> fromatMarkup(elHTML: <HTML>, data: <Object>)
-        Seems like missed prop-selector name: ${key} in template ${elHTML.firstElementChild.outerHTML}
-      `)
-    }
+  if (
+    typeof data === 'string' ||
+    typeof data === 'number'
+  ) {
+    result = result.replace(/{\{0\}}/, data);
+  } else {
+    Object.keys(data).forEach(key => {
+      let entry = data[key];
 
-    result = result.replace(new RegExp(`{{${key}}}`), data[key])
-  });
+      if (!entry) {
+        console.warn(
+        `
+          utils.js -> fromatMarkup(elHTML: <HTML>, data: <Object>)
+          Seems like missed prop-selector name: ${key} in template ${elHTML.firstElementChild.outerHTML}
+        `
+        )
+      }
+
+      result = result.replace(new RegExp(`{{${key}}}`), data[key]);
+    });
+  }
 
   tempDiv.innerHTML = result;
   return tempDiv.firstChild;

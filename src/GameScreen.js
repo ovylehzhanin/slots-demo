@@ -32,32 +32,38 @@ export class GameScreen extends Screen {
     return _$('#logoutButton');
   }
 
+  get $slotsInnerScreen() {
+    return _$('.slots__inner');
+  }
+
   get $wheelTemplate() {
-    return _$id('tmp.WheelTemplate').content.clone(true);
+    return _$id('tmp.WheelTemplate').content.cloneNode(true);
   }
 
   get $cellTemplate() {
-    return _$id('tmp.CellTemplate');
+    return _$id('tmp.CellTemplate').content.cloneNode(true);
   }
 
   $getWheels(rolls) {
-    const arrayIsNotEmpty = Array.isArray(rolls) && rolls.length;
-    const $cellTemplate = this.$cellTemplate;
+    const arrayIsNotEmpty = Array.isArray(rolls) && rolls.length > 0;
     let result = null;
 
-    console.log($cellTemplate);
-    console.log('empty array check', arrayIsNotEmpty);
     if (arrayIsNotEmpty) {
       result = rolls.map(roll => {
-        roll.map(cellValue => {
-          return formatMarkup($cellTemplate, cellValue);
-        })
+        let $cells = this.formatCells(roll);
+        let $wheel = this.$wheelTemplate.firstElementChild;
+        $wheel.append(...$cells);
+        return $wheel;
       });
-
-      console.log(result);
     }
 
-    return null;
+    return result;
+  }
+
+  formatCells(roll) {
+    return roll.map(cellValue => {
+      return formatMarkup(this.$cellTemplate.firstElementChild, cellValue);
+    });
   }
 
   initDetailsFetch() {
@@ -65,8 +71,9 @@ export class GameScreen extends Screen {
   }
 
   updateWheels(rolls) {
-    console.log('updateWheels -> ', rolls);
-    this.$getWheels(rolls);
+    const $wheels = this.$getWheels(rolls);
+    this.clearSlotsScreen();
+    this.$slotsInnerScreen.append(...$wheels);
   }
 
   updateDetails({ balance, last_bet, rolls, bets }) {
@@ -74,6 +81,10 @@ export class GameScreen extends Screen {
     this.$balanceInput.value = balance;
     this.betValues = bets.slice(0);
     this.updateWheels(rolls);
+  }
+
+  clearSlotsScreen() {
+    this.$slotsInnerScreen.innerHTML = '';
   }
 
   bindEvents() {
