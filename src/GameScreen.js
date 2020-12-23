@@ -83,6 +83,12 @@ export class GameScreen extends Screen {
     this.updateWheels(rolls);
   }
 
+  updateBet(value) {
+    if (value) {
+      this.$betInput.value = value;
+    }
+  }
+
   clearSlotsScreen() {
     this.$slotsInnerScreen.innerHTML = '';
   }
